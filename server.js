@@ -43,7 +43,7 @@ app.get('/api/v1/users', (req, res) => {
 });
 
 // Get user by ID
-app.get('/api/v1/users/:id', checkRequiredProperties(['id']), (req, res) => {
+app.get('/api/v1/users/:id', (req, res) => {
   const userId = parseInt(req.params.id);
   const users = app.locals.data[0];
   const user = users.find((user) => user.id === userId);
@@ -59,7 +59,7 @@ app.get('/api/v1/activities', (req, res) => {
 });
 
 // Get all activities or activities for a specific user by ID
-app.get('/api/v1/activities/:userId', checkRequiredProperties(['userId']), (req, res) => {
+app.get('/api/v1/activities/:userId', (req, res) => {
     const userId = parseInt(req.params.userId);
     const activities = app.locals.data[1];
     const userActivities = activities.filter(
@@ -71,7 +71,16 @@ app.get('/api/v1/activities/:userId', checkRequiredProperties(['userId']), (req,
 );
 
 // Add a user
-app.post('/api/v1/users', checkRequiredProperties(['firstname', 'lastname', 'city', 'state', 'profile_medium', 'id']), (req, res) => {
+app.post('/api/v1/users',
+  checkRequiredProperties([
+    'firstname',
+    'lastname',
+    'city',
+    'state',
+    'profile_medium',
+    'id',
+  ]),
+  (req, res) => {
     const newUser = { ...req.body };
     app.locals.data[0].push(newUser);
     res.status(201).json(newUser);
@@ -79,7 +88,16 @@ app.post('/api/v1/users', checkRequiredProperties(['firstname', 'lastname', 'cit
 );
 
 // Add activities
-app.post('/api/v1/activities', checkRequiredProperties(['userId', 'name', 'distance', 'type', 'start_date', 'time']), (req, res) => {
+app.post('/api/v1/activities',
+  checkRequiredProperties([
+    'userId',
+    'name',
+    'distance',
+    'type',
+    'start_date',
+    'time',
+  ]),
+  (req, res) => {
     const id = uuidv4();
     const newActivity = { id, ...req.body };
     app.locals.data[1].push(newActivity);
