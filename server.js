@@ -175,3 +175,4 @@ app.delete('/api/v1/hallOfFame/:id', (req, res) => {
   app.locals.hallOfFame.splice(index, 1);
   return res.status(204).send();
 });
+ 
