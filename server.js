@@ -149,6 +149,22 @@ app.post('/api/v1/quote', (req, res) => {
   return res.status(200).json(app.locals.quote);
 });
 
+// Update a user
+app.put('/api/v1/users/:id', (req, res) => {
+  const userId = parseInt(req.params.id);
+  const users = app.locals.users;
+  const userIndex = users.findIndex((user) => user.id === userId);
+
+  if (userIndex === -1) return res.status(404).json({ message: 'User not found' });
+
+  const updatedUser = { ...users[userIndex], ...req.body };
+  users[userIndex] = updatedUser;
+
+  const { stravaAccessToken, stravaRefreshToken, ...responseUser } = updatedUser;
+
+  return res.status(200).json(responseUser);
+});
+
 // Delete from hall of fame
 app.delete('/api/v1/hallOfFame/:id', (req, res) => {
   const id = Number(req.params.id);
