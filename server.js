@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://workout-metrics.vercel.app',
   })
 );
 app.use(express.json());
@@ -20,7 +20,7 @@ app.locals = {
 
 app.listen(app.get('port'), () => {
   console.log(
-    `Workout Metrics API running on http://localhost:${app.get('port')}`
+    `Workout Metrics API running on https://workout-metrics.vercel.app:${app.get('port')}`
   );
 });
 
