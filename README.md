@@ -23,41 +23,21 @@ To get started with the API, follow these steps:
 
 ## Endpoints
 
-### Get all users
-```
-GET /api/v1/users
-```
-Returns a list of all users.
-
-### Get user by ID
-```
-GET /api/v1/users/:id
-```
-Returns the user with the specified ID.
-
-### Get all activities
-```
-GET /api/v1/activities
-```
-Returns a list of all activities.
-
-### Get activities for a specific user by ID
-```
-GET /api/v1/activities/:userId
-```
-Returns activities for the user with the specified ID.
-
-### Add a user
-```
-POST /api/v1/users
-```
-Adds a new user.
-
-### Add an activity
-```
-POST /api/v1/activities
-```
-Adds a new activity.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/quote` | Returns a quote |
+| GET | `/api/v1/users` | Returns a list of all users |
+| GET | `/api/v1/users/:id` | Returns the user with the specified ID |
+| GET | `/api/v1/activities` | Returns a list of all activities |
+| GET | `/api/v1/activities/:userId` | Returns activities for the user with the specified ID |
+| GET | `/api/v1/hallOfFame` | Returns all hall of fame activities |
+| GET | `/api/v1/hallOfFame/:userId` | Returns hall of fame activities by user ID |
+| POST | `/api/v1/users` | Adds a new user |
+| POST | `/api/v1/activities` | Adds a new activity |
+| POST | `/api/v1/hallOfFame` | Adds activities to hall of fame |
+| POST | `/api/v1/quote` | Adds a quote |
+| PUT | `/api/v1/users/:id` | Updates a user |
+| DELETE | `/api/v1/hallOfFame/:id` | Deletes from hall of fame |
 
 ## Technologies Used
 
