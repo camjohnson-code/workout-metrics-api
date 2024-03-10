@@ -110,7 +110,7 @@ app.post('/api/v1/users', (req, res) => {
   }
 
   const { stravaAccessToken, stravaRefreshToken, ...responseUser } = newUser;
-
+ 
   res.status(201).json(responseUser);
 });
 
