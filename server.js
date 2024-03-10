@@ -160,7 +160,7 @@ app.put('/api/v1/users/:id', (req, res) => {
   const updatedUser = { ...users[userIndex], ...req.body };
   users[userIndex] = updatedUser;
 
-  const { stravaAccessToken, stravaRefreshToken, ...responseUser } = updatedUser;
+  const { stravaAccessToken, stravaRefreshToken, expirationToken, ...responseUser } = updatedUser;
 
   return res.status(200).json(responseUser);
 });
