@@ -116,15 +116,22 @@ app.post('/api/v1/users', (req, res) => {
 
 // Add activities
 app.post('/api/v1/activities', (req, res) => {
-  const newActivity = { ...req.body };
+  try {
+    const newActivity = { ...req.body };
 
-  const existingActivity = app.locals.activities.find(
-    (activity) => activity.id === newActivity.id
-  );
+    const existingActivity = app.locals.activities.find(
+      (activity) => activity.id === newActivity.id
+    );
 
-  if (!existingActivity) {
-    app.locals.activities.push(newActivity);
-    res.status(201).json(newActivity);
+    if (!existingActivity) {
+      app.locals.activities.push(newActivity);
+      res.status(201).json(newActivity);
+    } else {
+      res.status(409).json({ error: 'Activity already exists' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
