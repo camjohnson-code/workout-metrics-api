@@ -127,7 +127,7 @@ app.post('/api/v1/activities', (req, res) => {
       app.locals.activities.push(newActivity);
       res.status(201).json(newActivity);
     } else {
-      res.status(409).json({ error: 'Activity already exists' });
+      res.status(200).json({ message: 'Activity already exists' });
     }
   } catch (error) {
     console.error(error);
