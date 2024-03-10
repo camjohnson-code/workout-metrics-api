@@ -3,11 +3,7 @@ const app = express();
 const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 
-app.use(
-  cors({
-    origin: 'https://workout-metrics.vercel.app',
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.set('port', process.env.PORT || 3001);
 
@@ -20,7 +16,9 @@ app.locals = {
 
 app.listen(app.get('port'), () => {
   console.log(
-    `Workout Metrics API running on https://workout-metrics.vercel.app:${app.get('port')}`
+    `Workout Metrics API running on https://workout-metrics.vercel.app:${app.get(
+      'port'
+    )}`
   );
 });
 
@@ -97,20 +95,20 @@ app.get('/api/v1/activities/:userId', (req, res) => {
 app.post('/api/v1/users', (req, res) => {
   const newUser = { ...req.body };
 
-  const existingUser = app.locals.users.find(
-    (user) => user.id === newUser.id
-  );
+  const existingUser = app.locals.users.find((user) => user.id === newUser.id);
 
   if (!existingUser) {
     app.locals.users.push(newUser);
   } else {
-    if (existingUser.stravaAccessToken !== newUser.stravaAccessToken) existingUser.stravaAccessToken = newUser.stravaAccessToken;
-    else if (existingUser.stravaRefreshToken !== newUser.stravaRefreshToken) existingUser.stravaRefreshToken = newUser.stravaRefreshToken;
+    if (existingUser.stravaAccessToken !== newUser.stravaAccessToken)
+      existingUser.stravaAccessToken = newUser.stravaAccessToken;
+    else if (existingUser.stravaRefreshToken !== newUser.stravaRefreshToken)
+      existingUser.stravaRefreshToken = newUser.stravaRefreshToken;
     else return res.status(409).json({ message: 'User already exists' });
   }
 
   const { stravaAccessToken, stravaRefreshToken, ...responseUser } = newUser;
- 
+
   res.status(201).json(responseUser);
 });
 
@@ -118,14 +116,14 @@ app.post('/api/v1/users', (req, res) => {
 app.post('/api/v1/activities', (req, res) => {
   const newActivity = { ...req.body };
 
-  // const existingActivity = app.locals.activities.find(
-  //   (activity) => activity.id === newActivity.id
-  // );
+  const existingActivity = app.locals.activities.find(
+    (activity) => activity.id === newActivity.id
+  );
 
-  app.locals.activities.push(newActivity);
-  // if (!existingActivity) {
-  //   res.status(201).json(newActivity);
-  // }
+  if (!existingActivity) {
+    app.locals.activities.push(newActivity);
+    res.status(201).json(newActivity);
+  }
 });
 
 // Add activities to hall of fame
@@ -155,12 +153,18 @@ app.put('/api/v1/users/:id', (req, res) => {
   const users = app.locals.users;
   const userIndex = users.findIndex((user) => user.id === userId);
 
-  if (userIndex === -1) return res.status(404).json({ message: 'User not found' });
+  if (userIndex === -1)
+    return res.status(404).json({ message: 'User not found' });
 
   const updatedUser = { ...users[userIndex], ...req.body };
   users[userIndex] = updatedUser;
 
-  const { stravaAccessToken, stravaRefreshToken, expirationToken, ...responseUser } = updatedUser;
+  const {
+    stravaAccessToken,
+    stravaRefreshToken,
+    expirationToken,
+    ...responseUser
+  } = updatedUser;
 
   return res.status(200).json(responseUser);
 });
@@ -168,11 +172,12 @@ app.put('/api/v1/users/:id', (req, res) => {
 // Delete from hall of fame
 app.delete('/api/v1/hallOfFame/:id', (req, res) => {
   const id = Number(req.params.id);
-  const index = app.locals.hallOfFame.findIndex(activity => activity.id === id);
+  const index = app.locals.hallOfFame.findIndex(
+    (activity) => activity.id === id
+  );
   if (index === -1) {
     return res.status(404).json({ error: 'Activity not found' });
   }
   app.locals.hallOfFame.splice(index, 1);
   return res.status(204).send();
 });
- 
