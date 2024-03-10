@@ -118,14 +118,14 @@ app.post('/api/v1/users', (req, res) => {
 app.post('/api/v1/activities', (req, res) => {
   const newActivity = { ...req.body };
 
-  const existingActivity = app.locals.activities.find(
-    (activity) => activity.id === newActivity.id
-  );
+  // const existingActivity = app.locals.activities.find(
+  //   (activity) => activity.id === newActivity.id
+  // );
 
-  if (!existingActivity) {
-    app.locals.activities.push(newActivity);
-    res.status(201).json(newActivity);
-  }
+  app.locals.activities.push(newActivity);
+  // if (!existingActivity) {
+  //   res.status(201).json(newActivity);
+  // }
 });
 
 // Add activities to hall of fame
