@@ -37,7 +37,7 @@ const checkRequiredProperties = (props) => (req, res, next) => {
   next();
 };
 
-// Endpoints
+// Endpoints 
 // Get a quote
 app.get('/api/v1/quote', (req, res) => {
   return res.status(200).json(app.locals.quote);
