@@ -6,7 +6,7 @@ const Activity = require('./models/activity.model');
 const User = require('./models/user.model');
 const Quote = require('./models/quote.model');
 const HallOfFame = require('./models/hallOfFame.model');
-require('dotenv').config();
+require('dotenv').config(); 
 
 const uri = process.env.MONGODB_URI;
 
