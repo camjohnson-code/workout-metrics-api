@@ -25,12 +25,6 @@ const activitySchema = new mongoose.Schema(
     },
     start_latlng: {
       type: [Number],
-      validate: {
-        validator: function (array) {
-          return array.length === 2;
-        },
-        message: 'start_latlng should be an array of exactly two numbers',
-      },
       required: false,
       default: [],
     },
@@ -61,11 +55,11 @@ const activitySchema = new mongoose.Schema(
       type: {
         id: {
           type: String,
-          required: true,
+          required: false,
         },
         summary_polyline: {
           type: String,
-          required: true,
+          required: false,
         },
       },
       required: false,

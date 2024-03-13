@@ -167,7 +167,7 @@ app.put('/api/v1/users/:id', async (req, res) => {
   }
 });
 
-// Delete from hall of fame
+// Delete activity from hall of fame
 app.delete('/api/v1/hallOfFame/:id', async (req, res) => {
   try {
     const hallOfFame = await HallOfFame.findOneAndDelete({ id: req.params.id });
@@ -190,12 +190,34 @@ app.delete('/api/v1/users/:id', async (req, res) => {
   }
 });
 
+// Delete a quote
+app.delete('/api/v1/quote/:id', async (req, res) => {
+  try {
+    const quote = await Quote.findOneAndDelete({ _id: req.params.id });
+    if (!quote) return res.status(404).json({ error: 'Quote not found' });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Delete activities by user Id
-app.delete('/api/v1/activities/:userId', async (req, res) => {
+app.delete('/api/v1/users/:userId/activities', async (req, res) => {
   try {
     const activities = await Activity.deleteMany({ userId: req.params.userId });
     if (!activities)
       return res.status(404).json({ error: 'Activities not found' });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete specific activity by id
+app.delete('/api/v1/activities/:id', async (req, res) => {
+  try {
+    const activity = await Activity.findOneAndDelete({ id: req.params.id });
+    if (!activity) return res.status(404).json({ error: 'Activity not found' });
     res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: error.message });
