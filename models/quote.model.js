@@ -4,7 +4,7 @@ const quoteSchema = new mongoose.Schema(
   {
     date: {
       type: String,
-      required: true,
+      default: null,
     },
     quote: {
       type: String,
@@ -14,10 +14,9 @@ const quoteSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: String,
-      required: false,
-      default: 'fitness',
+    hasBeenUsed: {
+      type: Boolean,
+      default: false,
     },
   },
   {
