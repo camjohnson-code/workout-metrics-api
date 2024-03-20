@@ -20,7 +20,7 @@ const quoteSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, 
   }
 );
 
