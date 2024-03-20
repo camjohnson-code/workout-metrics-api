@@ -167,6 +167,20 @@ app.put('/api/v1/users/:id', async (req, res) => {
   }
 });
 
+// Update a quote
+app.put('/api/v1/quote/:id', async (req, res) => {
+  try {
+    const quote =
+      (await Quote.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+      }))
+      || (await Quote.create(req.body));
+    res.status(200).json(quote);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Delete activity from hall of fame
 app.delete('/api/v1/hallOfFame/:id', async (req, res) => {
   try {
