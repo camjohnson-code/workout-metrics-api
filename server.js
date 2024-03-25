@@ -6,7 +6,7 @@ const Activity = require('./models/activity.model');
 const User = require('./models/user.model');
 const Quote = require('./models/quote.model');
 const HallOfFame = require('./models/hallOfFame.model');
-require('dotenv').config(); 
+require('dotenv').config();
 
 const uri = process.env.MONGODB_URI;
 
@@ -100,10 +100,22 @@ app.get('/api/v1/hallOfFame/:userId', async (req, res) => {
   }
 });
 
-// Get a quote
+// Get all quotes
 app.get('/api/v1/quote', async (req, res) => {
   try {
     const quote = await Quote.find();
+    res.status(200).json(quote);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get a quote by ID
+app.get('/api/v1/quote/:id', async (req, res) => {
+  console.log('quote id: ', req.params.id);
+  
+  try {
+    const quote = await Quote.findOne({ _id: req.params.id });
     res.status(200).json(quote);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -144,7 +156,7 @@ app.post('/api/v1/hallOfFame', async (req, res) => {
   }
 });
 
-// Create a quote 
+// Create a quote
 app.post('/api/v1/quote', async (req, res) => {
   try {
     const newQuote = await Quote.create(req.body);
@@ -173,8 +185,7 @@ app.put('/api/v1/quote/:id', async (req, res) => {
     const quote =
       (await Quote.findOneAndUpdate({ _id: req.params.id }, req.body, {
         new: true,
-      }))
-      || (await Quote.create(req.body));
+      })) || (await Quote.create(req.body));
     res.status(200).json(quote);
   } catch (error) {
     res.status(500).json({ error: error.message });
