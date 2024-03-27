@@ -248,3 +248,4 @@ app.delete('/api/v1/activities/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+ 
